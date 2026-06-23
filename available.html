@@ -1,0 +1,230 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Available Works • Phillip Patterson</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&amp;family=Inter:wght@300;400;500&amp;display=swap');
+        body { font-family: 'Inter', system_ui, sans-serif; }
+        .heading-serif { font-family: 'Playfair Display', Georgia, serif; }
+        .nav-link { position: relative; transition: color 0.2s ease; }
+        .nav-link:after { content: ''; position: absolute; width: 0; height: 1px; bottom: -2px; left: 0; background-color: #0f4c5c; transition: width 0.3s ease; }
+        .nav-link:hover:after { width: 100%; }
+        .portfolio-card { transition: all 0.4s cubic-bezier(0.23, 1, 0.32, 1); background: white; border: 1px solid #E5E0D8; border-radius: 20px; overflow: hidden; }
+        .portfolio-card:hover { transform: translateY(-6px); box-shadow: 0 20px 25px -5px rgb(0 0 0 / 0.08), 0 8px 10px -6px rgb(0 0 0 / 0.08); }
+    </style>
+</head>
+<body class="bg-[#FAF8F5] text-[#1A1A1A]">
+    <nav class="fixed top-0 left-0 right-0 z-50 bg-[#FAF8F5]/95 backdrop-blur-lg border-b border-[#E5E0D8]">
+        <div class="max-w-screen-2xl mx-auto px-8 md:px-12 flex items-center justify-between h-20">
+            <a href="index.html" class="flex items-center">
+                <img src="assets/images/logo.png" alt="Phillip Patterson Logo" class="h-9 w-auto">
+            </a>
+            <div class="hidden md:flex items-center gap-x-10 text-sm tracking-[0.5px] font-medium">
+                <a href="index.html" class="nav-link text-[#1A1A1A] hover:text-[#0f4c5c]">Home</a>
+                <a href="portfolio.html" class="nav-link text-[#1A1A1A] hover:text-[#0f4c5c]">Portfolio</a>
+                <a href="available.html" class="nav-link text-[#0f4c5c]">Available Works</a>
+                <a href="about.html" class="nav-link text-[#1A1A1A] hover:text-[#0f4c5c]">About</a>
+                <a href="contact.html" class="nav-link text-[#1A1A1A] hover:text-[#0f4c5c]">Contact</a>
+            </div>
+            <button id="mobile-menu-btn" class="md:hidden w-10 h-10 flex items-center justify-center">
+                <i class="fa-solid fa-bars text-xl"></i>
+            </button>
+        </div>
+        <div id="mobile-menu" class="hidden md:hidden bg-[#FAF8F5] border-t border-[#E5E0D8]">
+            <div class="px-8 py-5 flex flex-col gap-y-3 text-sm tracking-[0.5px]">
+                <a href="index.html" class="py-1">Home</a>
+                <a href="portfolio.html" class="py-1">Portfolio</a>
+                <a href="available.html" class="py-1 text-[#0f4c5c]">Available Works</a>
+                <a href="about.html" class="py-1">About</a>
+                <a href="contact.html" class="py-1">Contact</a>
+            </div>
+        </div>
+    </nav>
+
+    <div class="pt-20">
+        <div class="max-w-screen-2xl mx-auto px-6 md:px-12 pt-12 pb-8">
+            <div class="max-w-2xl">
+                <span class="uppercase tracking-[3px] text-xs text-emerald-700">CURRENTLY AVAILABLE FOR ACQUISITION</span>
+                <h1 class="text-6xl md:text-7xl heading-serif tracking-[-1.5px] mt-2">Available Works</h1>
+                <p class="mt-4 text-[#555]">Each acquisition includes a signed certificate of authenticity, professional packing, and coordinated shipping or installation support.</p>
+            </div>
+        </div>
+
+        <div class="max-w-screen-2xl mx-auto px-6 md:px-12 pb-20">
+            <div id="available-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                <!-- Populated via JS from shared data -->
+            </div>
+            
+            <div class="mt-12 text-center text-sm text-[#666]">
+                Works marked <span class="font-medium text-emerald-700">AVAILABLE</span> can be secured immediately via PayPal.<br>
+                For large installations or site-specific commissions, please <a href="contact.html" class="underline hover:text-[#0f4c5c]">contact the studio</a>.
+            </div>
+        </div>
+    </div>
+
+    <!-- Reuse modal from portfolio logic - simplified version -->
+    <div id="purchase-modal" class="hidden fixed inset-0 z-[100] bg-black/70 flex items-center justify-center p-4">
+        <div onclick="event.target.classList.add('hidden')" class="absolute inset-0"></div>
+        <div onclick="event.stopImmediatePropagation()" class="bg-white rounded-3xl max-w-md w-full p-8 relative">
+            <!-- Content injected by JS -->
+        </div>
+    </div>
+
+    <footer class="border-t border-[#E5E0D8] bg-white py-8">
+        <div class="max-w-screen-2xl mx-auto px-6 md:px-12 text-xs flex justify-between text-[#666]">
+            <div>© Phillip Patterson 2026</div>
+            <a href="portfolio.html" class="hover:text-[#0f4c5c]">View all works →</a>
+        </div>
+    </footer>
+
+    <script>
+        const availableArtworks = [
+            {
+                id: "glass-liminal",
+                title: "Liminal Surge",
+                year: 2026,
+                type: "sculpture",
+                dimensions: "220 × 180 × 90 cm",
+                medium: "Hand-cast glass, resin, stainless steel suspension",
+                price: "POA",
+                status: "available",
+                description: "A suspended monument to the moment between violence and stillness. Multiple layers of fractured glass capture and refract light in unpredictable ways.",
+                image: "assets/images/glass_sculpture_main.jpg"
+            },
+            {
+                id: "fractured-bloom",
+                title: "Fractured Bloom",
+                year: 2025,
+                type: "painting",
+                dimensions: "130 × 100 cm",
+                medium: "Acrylic, fumed silica, impasto gel, resin, glass microspheres on linen",
+                price: "$2,950 AUD",
+                status: "available",
+                description: "Organic forms push through cracked and distressed surfaces. A meditation on resilience — beauty emerging not despite damage, but through it.",
+                image: "assets/images/painting_fractured_bloom_detail.jpg"
+            }
+        ];
+
+        function renderAvailable() {
+            const grid = document.getElementById('available-grid');
+            grid.innerHTML = availableArtworks.map(art => `
+                <div class="portfolio-card group">
+                    <div class="aspect-[16/11] overflow-hidden bg-[#EDE9E0]">
+                        <img src="${art.image}" alt="${art.title}" class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-[1.04]">
+                    </div>
+                    <div class="p-6">
+                        <div class="flex justify-between items-start">
+                            <div>
+                                <h3 class="font-semibold text-[21px] tracking-[-0.3px]">${art.title}</h3>
+                                <p class="text-sm text-[#555] mt-0.5">${art.year} • ${art.type === 'sculpture' ? 'Installation' : 'Painting'}</p>
+                            </div>
+                            <span class="status-badge bg-emerald-100 text-emerald-700 text-[10px] px-3 py-px font-medium tracking-wider">AVAILABLE</span>
+                        </div>
+                        
+                        <div class="mt-5 text-sm text-[#666]">${art.dimensions}</div>
+                        
+                        <div class="mt-6 flex items-center justify-between">
+                            <div class="text-xl font-semibold text-[#0f4c5c]">${art.price}</div>
+                            
+                            <div class="flex gap-x-2">
+                                <button onclick="quickEnquire('${art.id}')" 
+                                        class="px-5 py-2 text-xs tracking-wider border border-[#C9C4B9] hover:bg-white rounded-full font-medium">ENQUIRE</button>
+                                <button onclick="quickPurchase('${art.id}')" 
+                                        class="px-6 py-2 text-xs tracking-wider bg-[#0f4c5c] hover:bg-black text-white rounded-full font-medium flex items-center gap-x-1.5">
+                                    <i class="fa-brands fa-paypal text-sm"></i> 
+                                    <span>BUY</span>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        function quickPurchase(artId) {
+            const art = availableArtworks.find(a => a.id === artId);
+            if (!art) return;
+            
+            const modal = document.getElementById('purchase-modal');
+            modal.innerHTML = `
+                <div onclick="event.target.classList.add('hidden')" class="absolute inset-0"></div>
+                <div onclick="event.stopImmediatePropagation()" class="bg-white rounded-3xl max-w-md w-full p-8 relative">
+                    <button onclick="this.closest('.fixed').classList.add('hidden')" class="absolute top-5 right-5 text-2xl text-[#aaa]">×</button>
+                    
+                    <div>
+                        <div class="text-xs tracking-[2px] text-emerald-700">SECURE ACQUISITION</div>
+                        <h3 class="text-3xl heading-serif tracking-tight mt-1">${art.title}</h3>
+                        <p class="text-sm text-[#555] mt-1">${art.dimensions} • ${art.year}</p>
+                    </div>
+                    
+                    <div class="my-7 border-y border-[#E5E0D8] py-5 text-sm">
+                        <div class="flex justify-between"><span class="text-[#555]">Price</span> <span class="font-semibold">${art.price}</span></div>
+                        <div class="flex justify-between mt-2 text-xs text-[#777]"><span>Professional packing + shipping arranged</span></div>
+                    </div>
+                    
+                    <form onsubmit="completeQuickPurchase(event, '${art.id}')">
+                        <div class="space-y-4">
+                            <input type="text" placeholder="Full Name" required class="w-full border border-[#D9D4C9] rounded-2xl px-5 py-3 text-sm">
+                            <input type="email" placeholder="Email Address" required class="w-full border border-[#D9D4C9] rounded-2xl px-5 py-3 text-sm">
+                            <input type="text" placeholder="City, Country" value="Sydney, Australia" class="w-full border border-[#D9D4C9] rounded-2xl px-5 py-3 text-sm">
+                        </div>
+                        
+                        <button type="submit" class="mt-6 w-full py-4 bg-[#0f4c5c] text-white rounded-2xl text-sm tracking-[1.5px] font-medium flex items-center justify-center gap-x-2 hover:bg-black transition">
+                            <i class="fa-brands fa-paypal"></i> CONTINUE TO PAYPAL
+                        </button>
+                    </form>
+                    
+                    <p class="text-center text-[10px] mt-5 text-[#888]">You will receive a PayPal invoice within 2 hours. Payment confirms your acquisition.</p>
+                </div>
+            `;
+            modal.classList.remove('hidden');
+            modal.classList.add('flex');
+        }
+
+        function completeQuickPurchase(e, artId) {
+            e.preventDefault();
+            const btn = e.target.querySelector('button');
+            btn.innerHTML = `<i class="fa-solid fa-spinner fa-spin"></i> PROCESSING...`;
+            
+            setTimeout(() => {
+                const modal = document.getElementById('purchase-modal');
+                modal.innerHTML = `
+                    <div class="bg-white rounded-3xl max-w-md w-full p-10 text-center">
+                        <i class="fa-solid fa-check-circle text-6xl text-emerald-600 mx-auto"></i>
+                        <h3 class="mt-6 text-2xl heading-serif">Thank you, ${artId === 'glass-liminal' ? 'the studio' : 'your'} acquisition is confirmed.</h3>
+                        <p class="mt-3 text-sm text-[#555]">A PayPal invoice and next steps have been sent to your email. We will be in touch within the hour to coordinate delivery or installation.</p>
+                        
+                        <button onclick="document.getElementById('purchase-modal').classList.add('hidden'); window.location.reload()" 
+                                class="mt-8 px-8 py-3 text-sm tracking-wider border border-[#0f4c5c] rounded-2xl font-medium">RETURN TO AVAILABLE WORKS</button>
+                    </div>
+                `;
+            }, 1600);
+        }
+
+        function quickEnquire(artId) {
+            window.location.href = `contact.html?artwork=${artId}&type=enquire`;
+        }
+
+        function initMobileMenu() {
+            const btn = document.getElementById('mobile-menu-btn');
+            const menu = document.getElementById('mobile-menu');
+            if (!btn || !menu) return;
+            btn.addEventListener('click', () => {
+                menu.classList.toggle('hidden');
+                const icon = btn.querySelector('i');
+                icon.classList.toggle('fa-bars');
+                icon.classList.toggle('fa-times');
+            });
+        }
+
+        window.onload = function() {
+            renderAvailable();
+            initMobileMenu();
+        }
+    </script>
+</body>
+</html>
