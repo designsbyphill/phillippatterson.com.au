@@ -4,71 +4,112 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Phillip Patterson • Texture • Light • Frenzy</title>
+    <meta name="description" content="Sydney artist Phillip Patterson — textured mixed media and light-reactive works.">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css">
     <style>
-        :root { --accent: #c9a66b; }
+        :root { --iridescent: linear-gradient(90deg, #c9a66b, #ff9ff3, #00f0ff, #c9a66b); }
         * { margin:0; padding:0; box-sizing:border-box; }
         body {
             font-family: 'Helvetica Neue', system-ui, sans-serif;
             background: #0a0a0a;
             color: #e8e0d0;
         }
-
         header {
             position: fixed; top: 0; left: 0; right: 0; z-index: 1000;
             padding: 1.8rem 5%; display: flex; justify-content: space-between; align-items: center;
             mix-blend-mode: difference;
         }
-        .logo-container { height: 90px; }
+        .logo-container { height: 100px; }
         .logo-container img { height: 100%; filter: invert(1) contrast(1.2); }
 
         .hero {
             height: 100vh;
-            position: relative;
-            overflow: hidden;
-        }
-        .hero-bg {
-            position: absolute;
-            inset: 0;
             background-size: cover;
             background-position: center;
-            transition: opacity 2.8s ease;
-            opacity: 0;
-        }
-        .hero-bg.active { opacity: 1; }
-
-        .hero-content {
-            position: relative;
-            z-index: 2;
-            height: 100%;
             display: flex;
             align-items: center;
             justify-content: center;
             text-align: center;
+            position: relative;
+        }
+        .hero::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: rgba(10,10,10,0.6);
+        }
+        .hero-content {
+            position: relative;
+            z-index: 2;
             padding: 0 5%;
         }
         .hero-content h1 {
-            font-size: clamp(3.8rem, 11vw, 9rem);
-            line-height: 0.85;
+            font-size: clamp(4rem, 12vw, 9.5rem);
+            line-height: 0.82;
             font-weight: 900;
-            letter-spacing: -6px;
-            color: white;
-            text-shadow: 0 4px 30px rgba(0,0,0,0.95);
-            -webkit-text-stroke: 2px #111;
+            letter-spacing: -7px;
+            background: var(--iridescent);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
         }
         .tagline {
-            font-size: clamp(1.5rem, 4.5vw, 2rem);
-            margin: 1.2rem 0 1.8rem;
-            color: var(--accent);
-            text-shadow: 0 3px 20px #000;
+            font-size: 1.9rem;
+            letter-spacing: -1px;
+            margin: 1.5rem 0 2.5rem;
+            opacity: 0.95;
         }
         .poetic {
             font-style: italic;
             font-size: 1.25rem;
-            opacity: 0.9;
-            max-width: 700px;
-            margin: 0 auto 2.5rem;
-            text-shadow: 0 2px 15px #000;
+            opacity: 0.85;
+            max-width: 680px;
+            margin: 0 auto;
+        }
+
+        section { padding: 140px 5% 100px; }
+        h2 { font-size: 3.8rem; text-align: center; margin-bottom: 3.5rem; letter-spacing: -2px; }
+
+        .gallery {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(340px, 1fr));
+            gap: 1.8rem;
+            max-width: 1600px;
+            margin: 0 auto;
+        }
+        .art-card {
+            position: relative;
+            overflow: hidden;
+            aspect-ratio: 5 / 4;
+            cursor: pointer;
+        }
+        .art-card img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: all 1.2s cubic-bezier(0.23, 1, 0.32, 1);
+        }
+        .art-card:hover img {
+            transform: scale(1.12) rotate(1deg);
+        }
+        .info {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            padding: 2rem 1.5rem 1.5rem;
+            background: linear-gradient(transparent, #0a0a0a);
+            transform: translateY(60%);
+            transition: transform 0.7s;
+        }
+        .art-card:hover .info { transform: translateY(0); }
+
+        .cta-bar {
+            background: #c9a66b;
+            color: #111;
+            text-align: center;
+            padding: 2.8rem 5%;
+            font-size: 1.35rem;
+            font-weight: 600;
         }
     </style>
 </head>
@@ -85,34 +126,89 @@
         </nav>
     </header>
 
-    <section class="hero">
-        <div class="hero-bg active" style="background-image: url('art1.jpg');"></div>
-        <div class="hero-bg" style="background-image: url('art2.jpg');"></div>
-        <div class="hero-bg" style="background-image: url('art3.jpg');"></div>
-
+    <section class="hero" id="hero">
         <div class="hero-content">
             <div>
                 <h1>PHILLIP<br>PATTERSON</h1>
                 <p class="tagline">Texture • Light • Frenzy</p>
                 <p class="poetic">“The absence of my sanity was born”</p>
-                <a href="#work" style="color:#c9a66b; font-size:1.5rem; text-decoration:none; border-bottom:2px solid #c9a66b; padding-bottom:8px;">Experience the Work →</a>
+                <a href="#work" style="color:#c9a66b; font-size:1.5rem; text-decoration:none; border-bottom:2px solid #c9a66b; padding-bottom:8px; margin-top:2rem; display:inline-block;">Experience the Work →</a>
             </div>
         </div>
     </section>
 
-    <!-- Paste your previous work, shop, contact, footer sections here if you want the full site -->
+    <section id="work">
+        <h2>Recent Surfaces</h2>
+        <div class="gallery">
+            <div class="art-card">
+                <img src="art1.jpg" alt="">
+                <div class="info">
+                    <h3>Fractured Veil</h3>
+                    <p>130×100cm • Fumed silica, resin, microspheres • 2026</p>
+                </div>
+            </div>
+            <div class="art-card">
+                <img src="art2.jpg" alt="">
+                <div class="info">
+                    <h3>Resin Flow</h3>
+                    <p>Clear resin encapsulated texture</p>
+                </div>
+            </div>
+            <div class="art-card">
+                <img src="art3.jpg" alt="">
+                <div class="info">
+                    <h3>Flow State</h3>
+                    <p>Heavy impasto &amp; material frenzy</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <div class="cta-bar">
+        Large-scale works where light and material run wild
+    </div>
+
+    <section id="shop">
+        <h2>Available Now</h2>
+        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(340px, 1fr)); gap: 3rem; max-width: 1400px; margin: 0 auto; padding: 0 5%;">
+            <div style="text-align:center;">
+                <img src="art1.jpg" alt="">
+                <h3>Fractured Veil</h3>
+                <div style="font-size:2.2rem;color:#c9a66b;margin:1.2rem 0;">A$2,950</div>
+                <button onclick="buyWork(this)" style="background:#c9a66b;color:#111;padding:1rem 3rem;border:none;cursor:pointer;font-weight:600;width:100%;">Claim via PayPal</button>
+            </div>
+        </div>
+    </section>
+
+    <section id="contact">
+        <h2>Studio Enquiries</h2>
+        <p style="text-align:center; font-size:1.4rem; max-width:700px; margin:2rem auto;">
+            hello@phillippatterson.com.au<br>
+            Surry Hills, Sydney • Commissions welcome
+        </p>
+        <div style="text-align:center; margin-top:2.5rem;">
+            <a href="https://www.instagram.com/DESIGNSBYPHILL" target="_blank" style="color:#c9a66b; font-size:1.6rem; text-decoration:none;">@DESIGNSBYPHILL →</a>
+        </div>
+    </section>
+
+    <footer style="padding:4rem 5% 2rem; text-align:center; border-top:1px solid #222;">
+        <div style="font-size:2.4rem; margin-bottom:1.5rem;">
+            <a href="https://www.instagram.com/DESIGNSBYPHILL" target="_blank" style="color:#c9a66b;"><i class="fab fa-instagram"></i></a>
+        </div>
+        <p>© 2026 Phillip Patterson • phillippatterson.com.au</p>
+    </footer>
 
     <script>
-        let current = 0;
-        const slides = document.querySelectorAll('.hero-bg');
+        // Random hero background each visit
+        const images = ['art1.jpg', 'art2.jpg', 'art3.jpg'];
+        const randomImage = images[Math.floor(Math.random() * images.length)];
+        document.getElementById('hero').style.backgroundImage = `linear-gradient(rgba(10,10,10,0.6), rgba(10,10,10,0.75)), url('${randomImage}')`;
 
-        function nextSlide() {
-            slides[current].classList.remove('active');
-            current = (current + 1) % slides.length;
-            slides[current].classList.add('active');
+        function buyWork(btn) {
+            if (confirm("Opening PayPal to secure this piece...")) {
+                window.open('https://www.paypal.com/paypalme/yourpaypalhandle', '_blank');
+            }
         }
-
-        setInterval(nextSlide, 4200); // nice slow pace
     </script>
 </body>
 </html>
