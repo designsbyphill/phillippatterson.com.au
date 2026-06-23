@@ -19,8 +19,30 @@
             padding: 1.8rem 5%; display: flex; justify-content: space-between; align-items: center;
             mix-blend-mode: difference;
         }
-        .logo-container { height: 100px; }
-        .logo-container img { height: 100%; filter: invert(1) contrast(1.2); }
+        .logo-container img { 
+            height: 95px; 
+            filter: invert(1) contrast(1.2); 
+        }
+
+        nav a {
+            color: #e8e0d0;
+            text-decoration: none;
+            margin-left: 2.5rem;
+            font-size: 1.1rem;
+            font-weight: 500;
+            position: relative;
+        }
+        nav a:after {
+            content: '';
+            position: absolute;
+            width: 0;
+            height: 1.5px;
+            bottom: -4px;
+            left: 0;
+            background: #c9a66b;
+            transition: width 0.4s ease;
+        }
+        nav a:hover:after { width: 100%; }
 
         .hero {
             height: 100vh;
@@ -36,12 +58,7 @@
             content: '';
             position: absolute;
             inset: 0;
-            background: rgba(10,10,10,0.6);
-        }
-        .hero-content {
-            position: relative;
-            z-index: 2;
-            padding: 0 5%;
+            background: rgba(10,10,10,0.65);
         }
         .hero-content h1 {
             font-size: clamp(4rem, 12vw, 9.5rem);
@@ -88,29 +105,7 @@
             object-fit: cover;
             transition: all 1.2s cubic-bezier(0.23, 1, 0.32, 1);
         }
-        .art-card:hover img {
-            transform: scale(1.12) rotate(1deg);
-        }
-        .info {
-            position: absolute;
-            bottom: 0;
-            left: 0;
-            right: 0;
-            padding: 2rem 1.5rem 1.5rem;
-            background: linear-gradient(transparent, #0a0a0a);
-            transform: translateY(60%);
-            transition: transform 0.7s;
-        }
-        .art-card:hover .info { transform: translateY(0); }
-
-        .cta-bar {
-            background: #c9a66b;
-            color: #111;
-            text-align: center;
-            padding: 2.8rem 5%;
-            font-size: 1.35rem;
-            font-weight: 600;
-        }
+        .art-card:hover img { transform: scale(1.08); }
     </style>
 </head>
 <body>
@@ -142,21 +137,21 @@
         <div class="gallery">
             <div class="art-card">
                 <img src="art1.jpg" alt="">
-                <div class="info">
+                <div class="info" style="padding:2rem 1.5rem 1.5rem;">
                     <h3>Fractured Veil</h3>
                     <p>130×100cm • Fumed silica, resin, microspheres • 2026</p>
                 </div>
             </div>
             <div class="art-card">
                 <img src="art2.jpg" alt="">
-                <div class="info">
+                <div class="info" style="padding:2rem 1.5rem 1.5rem;">
                     <h3>Resin Flow</h3>
                     <p>Clear resin encapsulated texture</p>
                 </div>
             </div>
             <div class="art-card">
                 <img src="art3.jpg" alt="">
-                <div class="info">
+                <div class="info" style="padding:2rem 1.5rem 1.5rem;">
                     <h3>Flow State</h3>
                     <p>Heavy impasto &amp; material frenzy</p>
                 </div>
@@ -164,7 +159,7 @@
         </div>
     </section>
 
-    <div class="cta-bar">
+    <div class="cta-bar" style="background:#c9a66b;color:#111;text-align:center;padding:3rem 5%;font-size:1.4rem;font-weight:600;">
         Large-scale works where light and material run wild
     </div>
 
@@ -199,7 +194,7 @@
     </footer>
 
     <script>
-        // Random hero background each visit
+        // Random hero
         const images = ['art1.jpg', 'art2.jpg', 'art3.jpg'];
         const randomImage = images[Math.floor(Math.random() * images.length)];
         document.getElementById('hero').style.backgroundImage = `linear-gradient(rgba(10,10,10,0.6), rgba(10,10,10,0.75)), url('${randomImage}')`;
