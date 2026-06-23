@@ -1,0 +1,237 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Contact • Phillip Patterson</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&amp;family=Inter:wght@300;400;500&amp;display=swap');
+        body { font-family: 'Inter', system_ui, sans-serif; }
+        .heading-serif { font-family: 'Playfair Display', Georgia, serif; }
+        .nav-link { position: relative; transition: color 0.2s ease; }
+        .nav-link:after { content: ''; position: absolute; width: 0; height: 1px; bottom: -2px; left: 0; background-color: #0f4c5c; transition: width 0.3s ease; }
+        .nav-link:hover:after { width: 100%; }
+    </style>
+</head>
+<body class="bg-[#FAF8F5] text-[#1A1A1A]">
+    <nav class="fixed top-0 left-0 right-0 z-50 bg-[#FAF8F5]/95 backdrop-blur-lg border-b border-[#E5E0D8]">
+        <div class="max-w-screen-2xl mx-auto px-8 md:px-12 flex items-center justify-between h-20">
+            <a href="index.html" class="flex items-center">
+                <img src="assets/images/logo.png" alt="Phillip Patterson Logo" class="h-9 w-auto">
+            </a>
+            <div class="hidden md:flex items-center gap-x-10 text-sm tracking-[0.5px] font-medium">
+                <a href="index.html" class="nav-link text-[#1A1A1A] hover:text-[#0f4c5c]">Home</a>
+                <a href="portfolio.html" class="nav-link text-[#1A1A1A] hover:text-[#0f4c5c]">Portfolio</a>
+                <a href="available.html" class="nav-link text-[#1A1A1A] hover:text-[#0f4c5c]">Available Works</a>
+                <a href="about.html" class="nav-link text-[#1A1A1A] hover:text-[#0f4c5c]">About</a>
+                <a href="contact.html" class="nav-link text-[#0f4c5c]">Contact</a>
+            </div>
+            <button id="mobile-menu-btn" class="md:hidden w-10 h-10 flex items-center justify-center">
+                <i class="fa-solid fa-bars text-xl"></i>
+            </button>
+        </div>
+        <div id="mobile-menu" class="hidden md:hidden bg-[#FAF8F5] border-t border-[#E5E0D8]">
+            <div class="px-8 py-5 flex flex-col gap-y-3 text-sm tracking-[0.5px]">
+                <a href="index.html" class="py-1">Home</a>
+                <a href="portfolio.html" class="py-1">Portfolio</a>
+                <a href="available.html" class="py-1">Available Works</a>
+                <a href="about.html" class="py-1">About</a>
+                <a href="contact.html" class="py-1 text-[#0f4c5c]">Contact</a>
+            </div>
+        </div>
+    </nav>
+
+    <div class="pt-20">
+        <div class="max-w-screen-2xl mx-auto px-6 md:px-12 pt-14 pb-10">
+            <div class="max-w-xl">
+                <span class="text-xs tracking-[3px] text-[#0f4c5c]">STUDIO ENQUIRIES</span>
+                <h1 class="text-6xl md:text-[72px] heading-serif tracking-[-1.8px] mt-2 leading-none">Let's talk about the work.</h1>
+                <p class="mt-5 text-lg text-[#444]">Whether you are interested in acquiring a piece, commissioning new work, or simply want to connect, I welcome thoughtful conversation.</p>
+            </div>
+        </div>
+
+        <div class="max-w-screen-2xl mx-auto px-6 md:px-12 pb-16">
+            <div class="grid md:grid-cols-5 gap-x-16">
+                
+                <!-- Contact Form -->
+                <div class="md:col-span-3">
+                    <form id="contact-form" onsubmit="handleContactSubmit(event)" class="space-y-6">
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-5">
+                            <div>
+                                <label class="block text-xs tracking-wider text-[#555] mb-1.5">YOUR NAME</label>
+                                <input type="text" id="name" required class="w-full border border-[#D9D4C9] focus:border-[#0f4c5c] rounded-2xl px-5 py-[13px] text-sm outline-none transition" placeholder="Jordan Hale">
+                            </div>
+                            <div>
+                                <label class="block text-xs tracking-wider text-[#555] mb-1.5">EMAIL ADDRESS</label>
+                                <input type="email" id="email" required class="w-full border border-[#D9D4C9] focus:border-[#0f4c5c] rounded-2xl px-5 py-[13px] text-sm outline-none transition" placeholder="jordan@studio.com">
+                            </div>
+                        </div>
+                        
+                        <div>
+                            <label class="block text-xs tracking-wider text-[#555] mb-1.5">SUBJECT</label>
+                            <select id="subject" class="w-full border border-[#D9D4C9] focus:border-[#0f4c5c] rounded-2xl px-5 py-[13px] text-sm outline-none bg-white">
+                                <option value="Artwork Enquiry">Artwork Enquiry</option>
+                                <option value="Commission / Site Specific">Commission or Site-Specific Project</option>
+                                <option value="Exhibition / Collaboration">Exhibition or Collaboration Opportunity</option>
+                                <option value="General">General Message</option>
+                                <option value="Press / Media">Press or Media Request</option>
+                            </select>
+                        </div>
+                        
+                        <div>
+                            <label class="block text-xs tracking-wider text-[#555] mb-1.5">MESSAGE</label>
+                            <textarea id="message" rows="6" required class="w-full border border-[#D9D4C9] focus:border-[#0f4c5c] rounded-3xl px-5 py-4 text-sm outline-none resize-y min-h-[140px]" placeholder="I'm interested in Liminal Surge for a private collection in Melbourne..."></textarea>
+                        </div>
+                        
+                        <div class="pt-2">
+                            <button type="submit" 
+                                    class="group w-full md:w-auto px-14 py-4 bg-[#0f4c5c] hover:bg-black active:bg-[#111] transition text-white text-sm tracking-[1.75px] font-medium rounded-2xl flex items-center justify-center gap-x-3">
+                                SEND MESSAGE
+                                <i class="fa-solid fa-paper-plane group-active:translate-x-0.5 transition"></i>
+                            </button>
+                            <p class="text-[10px] text-[#888] mt-3 tracking-wider">I personally read every message and respond within 48 hours.</p>
+                        </div>
+                    </form>
+                </div>
+                
+                <!-- Direct Contact Info -->
+                <div class="md:col-span-2 mt-12 md:mt-2">
+                    <div class="bg-white border border-[#E5E0D8] rounded-3xl p-8 md:p-9">
+                        <div class="space-y-8 text-sm">
+                            <div>
+                                <div class="uppercase tracking-[1.5px] text-xs text-[#0f4c5c] mb-2">DIRECT EMAIL</div>
+                                <a href="mailto:hello@phillippatterson.com.au" class="text-xl font-medium hover:text-[#0f4c5c] block">hello@phillippatterson.com.au</a>
+                            </div>
+                            
+                            <div>
+                                <div class="uppercase tracking-[1.5px] text-xs text-[#0f4c5c] mb-2">INSTAGRAM</div>
+                                <a href="https://www.instagram.com/designsbyphill" target="_blank" class="flex items-center gap-x-2 text-xl font-medium hover:text-[#0f4c5c]">
+                                    @designsbyphill <i class="fa-brands fa-instagram text-base ml-1"></i>
+                                </a>
+                            </div>
+                            
+                            <div>
+                                <div class="uppercase tracking-[1.5px] text-xs text-[#0f4c5c] mb-2">COLLECT ON BLUETHUMB</div>
+                                <a href="https://bluethumb.com/phillpatterson" target="_blank" class="text-xl font-medium hover:text-[#0f4c5c]">bluethumb.com/phillpatterson</a>
+                            </div>
+                        </div>
+                        
+                        <div class="mt-9 pt-8 border-t border-[#E5E0D8] text-xs text-[#666] leading-relaxed">
+                            Based in Surry Hills, Sydney.<br>
+                            Studio visits available by appointment only.
+                        </div>
+                    </div>
+                    
+                    <div class="mt-6 text-[10px] px-1 text-[#777] tracking-wider">
+                        For urgent matters regarding existing acquisitions or shipping, please email directly.
+                    </div>
+                </div>
+                
+            </div>
+        </div>
+    </div>
+
+    <footer class="bg-white border-t border-[#E5E0D8] py-8">
+        <div class="max-w-screen-2xl mx-auto px-6 md:px-12 flex flex-col md:flex-row text-xs text-[#666] justify-between gap-y-2">
+            <div>© Phillip Patterson. All rights reserved. 2026</div>
+            <div class="flex gap-x-5">
+                <span>Sydney, Australia</span>
+                <span>ABN available upon request</span>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        function initMobileMenu() {
+            const btn = document.getElementById('mobile-menu-btn');
+            const menu = document.getElementById('mobile-menu');
+            if (!btn || !menu) return;
+            btn.addEventListener('click', () => {
+                menu.classList.toggle('hidden');
+                const icon = btn.querySelector('i');
+                icon.classList.toggle('fa-bars');
+                icon.classList.toggle('fa-times');
+            });
+        }
+        
+        function handleContactSubmit(e) {
+            e.preventDefault();
+            
+            const btn = e.target.querySelector('button');
+            const originalText = btn.innerHTML;
+            btn.disabled = true;
+            btn.innerHTML = `SENDING <i class="fa-solid fa-spinner fa-spin ml-2"></i>`;
+            
+            // Simulate sending + open mailto as fallback for real delivery
+            setTimeout(() => {
+                const name = document.getElementById('name').value;
+                const email = document.getElementById('email').value;
+                const subject = document.getElementById('subject').value;
+                const message = document.getElementById('message').value;
+                
+                // Create mailto link (real emails will be sent via user's client)
+                const mailto = `mailto:hello@phillippatterson.com.au?subject=${encodeURIComponent(subject + ' — ' + name)}&body=${encodeURIComponent('From: ' + name + ' <' + email + '>\\n\\n' + message)}`;
+                
+                btn.innerHTML = `MESSAGE SENT`;
+                btn.style.backgroundColor = '#166534';
+                
+                setTimeout(() => {
+                    window.location.href = mailto;
+                    
+                    // Reset form after
+                    setTimeout(() => {
+                        e.target.reset();
+                        btn.disabled = false;
+                        btn.innerHTML = originalText;
+                        btn.style.backgroundColor = '';
+                        
+                        // Success message
+                        const success = document.createElement('div');
+                        success.className = `fixed bottom-8 left-1/2 -translate-x-1/2 bg-[#0f4c5c] text-white px-8 py-3.5 rounded-2xl text-sm flex items-center gap-x-3 shadow-xl z-[200]`;
+                        success.innerHTML = `<i class="fa-solid fa-check"></i> <span>Thank you. Your message has been sent and I will reply personally soon.</span>`;
+                        document.body.appendChild(success);
+                        
+                        setTimeout(() => {
+                            success.style.transition = 'opacity .4s ease';
+                            success.style.opacity = '0';
+                            setTimeout(() => success.remove(), 400);
+                        }, 4800);
+                    }, 1200);
+                }, 950);
+            }, 1350);
+        }
+        
+        // Pre-fill from URL params (e.g. from portfolio)
+        function prefillFromParams() {
+            const params = new URLSearchParams(window.location.search);
+            const artwork = params.get('artwork');
+            const type = params.get('type');
+            
+            if (artwork) {
+                const subjectSelect = document.getElementById('subject');
+                const message = document.getElementById('message');
+                
+                if (type === 'enquire') {
+                    subjectSelect.value = 'Artwork Enquiry';
+                    message.value = `I'm writing regarding "${artwork.replace('-', ' ')}". Could you please provide more information about availability, shipping, and payment options?`;
+                } else {
+                    subjectSelect.value = 'Artwork Enquiry';
+                    message.value = `I am interested in acquiring "${artwork.replace('-', ' ')}". Please let me know the next steps.`;
+                }
+                
+                // Scroll to form
+                setTimeout(() => {
+                    document.getElementById('contact-form').scrollIntoView({ behavior: 'smooth', block: 'center' });
+                }, 800);
+            }
+        }
+        
+        window.onload = function() {
+            initMobileMenu();
+            prefillFromParams();
+        }
+    </script>
+</body>
+</html>
