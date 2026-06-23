@@ -8,7 +8,11 @@
     <style>
         :root { --iridescent: linear-gradient(90deg, #c9a66b, #ff9ff3, #00f0ff, #c9a66b); }
         * { margin:0; padding:0; box-sizing:border-box; }
-        body { font-family: 'Helvetica Neue', system-ui, sans-serif; background: #0a0a0a; color: #e8e0d0; }
+        body {
+            font-family: 'Helvetica Neue', system-ui, sans-serif;
+            background: #0a0a0a;
+            color: #e8e0d0;
+        }
 
         header {
             position: fixed; top: 0; left: 0; right: 0; z-index: 1000;
@@ -33,7 +37,7 @@
             inset: 0;
             background-size: cover;
             background-position: center;
-            transition: opacity 2s ease;
+            transition: opacity 2.5s ease;
             opacity: 0;
         }
         .hero-bg.active { opacity: 1; }
@@ -48,12 +52,9 @@
             line-height: 0.82;
             font-weight: 900;
             letter-spacing: -6px;
-            background: linear-gradient(transparent, transparent), url('art1.jpg') center/cover;
-            -webkit-background-clip: text;
-            background-clip: text;
-            -webkit-text-fill-color: transparent;
-            color: transparent;
-            position: relative;
+            color: #111;
+            -webkit-text-stroke: 3px #e8e0d0;
+            text-shadow: 0 0 30px rgba(0,0,0,0.9);
         }
 
         .tagline {
@@ -61,6 +62,12 @@
             letter-spacing: -1px;
             margin: 1rem 0 1.5rem;
             color: #c9a66b;
+            text-shadow: 0 0 20px #000;
+        }
+
+        /* Special treatment for first slide */
+        .hero-bg.first {
+            background-color: #0a0a0a;
         }
     </style>
 </head>
@@ -78,35 +85,31 @@
     </header>
 
     <section class="hero">
-        <div class="hero-bg active" style="background-image: url('art1.jpg');"></div>
+        <div class="hero-bg first active" style="background-image: url('art1.jpg'); background-position: center;"></div>
         <div class="hero-bg" style="background-image: url('art2.jpg');"></div>
         <div class="hero-bg" style="background-image: url('art3.jpg');"></div>
 
         <div class="hero-text">
             <h1>PHILLIP<br>PATTERSON</h1>
             <p class="tagline">Texture • Light • Frenzy</p>
-            <p style="font-style:italic; opacity:0.85;">“The absence of my sanity was born”</p>
-            <a href="#work" style="color:#c9a66b; font-size:1.4rem; margin-top:2rem; display:inline-block; border-bottom:2px solid #c9a66b; padding-bottom:6px;">Experience the Work →</a>
+            <p style="font-style:italic; opacity:0.9; max-width:620px; margin:0 auto 2rem;">“The absence of my sanity was born”</p>
+            <a href="#work" style="color:#c9a66b; font-size:1.45rem; text-decoration:none; border-bottom:2px solid #c9a66b; padding-bottom:8px;">Experience the Work →</a>
         </div>
     </section>
 
-    <!-- Rest of your site (work, shop, contact, footer) goes here -->
+    <!-- Add the rest of your sections (work, shop, contact, footer) here from previous code -->
 
     <script>
         let current = 0;
         const slides = document.querySelectorAll('.hero-bg');
-        const title = document.querySelector('h1');
 
         function nextSlide() {
             slides[current].classList.remove('active');
             current = (current + 1) % slides.length;
             slides[current].classList.add('active');
-            
-            // Update the text mask to match current background
-            title.style.backgroundImage = `url('${slides[current].style.backgroundImage.match(/url\(["']?([^"']*)["']?\)/)[1]}')`;
         }
 
-        setInterval(nextSlide, 3000);
+        setInterval(nextSlide, 3800); // slower transition
     </script>
 </body>
 </html>
