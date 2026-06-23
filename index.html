@@ -4,24 +4,21 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Phillip Patterson • Texture • Light • Frenzy</title>
-    <meta name="description" content="Sydney artist Phillip Patterson — textured mixed media and light-reactive works.">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css">
     <style>
         :root { --iridescent: linear-gradient(90deg, #c9a66b, #ff9ff3, #00f0ff, #c9a66b); }
         * { margin:0; padding:0; box-sizing:border-box; }
-        body {
-            font-family: 'Helvetica Neue', system-ui, sans-serif;
-            background: #0a0a0a;
-            color: #e8e0d0;
+        body { font-family: 'Helvetica Neue', system-ui, sans-serif; background: #0a0a0a; color: #e8e0d0; }
+
+        .fixed-logo {
+            position: fixed;
+            top: 25px;
+            left: 5%;
+            z-index: 2000;
+            height: 95px;
+            cursor: pointer;
         }
-        header {
-            position: fixed; top: 0; left: 0; right: 0; z-index: 1000;
-            padding: 2rem 5%; display: flex; justify-content: center;
-        }
-        .logo-container img { 
-            height: 110px; 
-            filter: invert(1) contrast(1.2); 
-        }
+        .fixed-logo img { height: 100%; filter: invert(1) contrast(1.2); }
 
         .hero {
             height: 100vh;
@@ -48,80 +45,35 @@
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
         }
-        .tagline {
-            font-size: 1.9rem;
-            letter-spacing: -1px;
-            margin: 1.5rem 0 2.5rem;
-            opacity: 0.95;
-        }
-        .poetic {
-            font-style: italic;
-            font-size: 1.25rem;
-            opacity: 0.85;
-            max-width: 680px;
-            margin: 0 auto;
-        }
     </style>
 </head>
 <body>
 
-    <header>
-        <div class="logo-container">
-            <img src="logo stamp.png" alt="PATTERSON">
-        </div>
-    </header>
+    <!-- Fixed Logo -->
+    <div class="fixed-logo" onclick="window.scrollTo({top: 0, behavior: 'smooth'})">
+        <img src="logo.png" alt="PATTERSON">
+    </div>
 
     <section class="hero" id="hero">
         <div class="hero-content">
             <div>
                 <h1>PHILLIP<br>PATTERSON</h1>
-                <p class="tagline">Texture • Light • Frenzy</p>
-                <p class="poetic">“The absence of my sanity was born”</p>
+                <p style="font-size:1.9rem; margin:1.5rem 0 2.5rem;">Texture • Light • Frenzy</p>
+                <p style="font-style:italic; font-size:1.25rem; opacity:0.85;">“The absence of my sanity was born”</p>
                 <a href="#work" style="color:#c9a66b; font-size:1.55rem; text-decoration:none; border-bottom:2px solid #c9a66b; padding-bottom:8px; margin-top:2rem; display:inline-block;">Experience the Work →</a>
             </div>
         </div>
     </section>
 
     <section id="work" style="padding:140px 5% 100px;">
-        <h2 style="text-align:center; font-size:3.8rem; margin-bottom:3.5rem; letter-spacing:-2px;">Recent Surfaces</h2>
-        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(340px, 1fr)); gap: 2rem; max-width: 1600px; margin: 0 auto;">
-            <div style="position:relative; overflow:hidden; aspect-ratio:5/4;">
-                <img src="art1.jpg" alt="" style="width:100%; height:100%; object-fit:cover;">
-                <div style="position:absolute; bottom:0; left:0; right:0; padding:2rem 1.5rem 1.5rem; background:linear-gradient(transparent, #0a0a0a);">
-                    <h3>Fractured Veil</h3>
-                    <p>130×100cm • Fumed silica, resin, microspheres • 2026</p>
-                </div>
-            </div>
-            <div style="position:relative; overflow:hidden; aspect-ratio:5/4;">
-                <img src="art2.jpg" alt="" style="width:100%; height:100%; object-fit:cover;">
-                <div style="position:absolute; bottom:0; left:0; right:0; padding:2rem 1.5rem 1.5rem; background:linear-gradient(transparent, #0a0a0a);">
-                    <h3>Resin Flow</h3>
-                    <p>Clear resin encapsulated texture</p>
-                </div>
-            </div>
-            <div style="position:relative; overflow:hidden; aspect-ratio:5/4;">
-                <img src="art3.jpg" alt="" style="width:100%; height:100%; object-fit:cover;">
-                <div style="position:absolute; bottom:0; left:0; right:0; padding:2rem 1.5rem 1.5rem; background:linear-gradient(transparent, #0a0a0a);">
-                    <h3>Flow State</h3>
-                    <p>Heavy impasto &amp; material frenzy</p>
-                </div>
-            </div>
-        </div>
+        <h2 style="text-align:center; font-size:3.8rem; margin-bottom:3rem;">Recent Surfaces</h2>
+        <!-- Your gallery images here -->
     </section>
 
-    <footer style="padding:4rem 5% 3rem; text-align:center; border-top:1px solid #222;">
-        <div style="font-size:2.4rem; margin-bottom:1.5rem;">
-            <a href="https://www.instagram.com/DESIGNSBYPHILL" target="_blank" style="color:#c9a66b;"><i class="fab fa-instagram"></i></a>
-        </div>
-        <p>© 2026 Phillip Patterson • phillippatterson.com.au</p>
-        <p style="margin-top:1rem; opacity:0.6;">hello@phillippatterson.com.au</p>
-    </footer>
-
     <script>
-        // Random hero image
         const images = ['art1.jpg', 'art2.jpg', 'art3.jpg'];
         const randomImage = images[Math.floor(Math.random() * images.length)];
-        document.getElementById('hero').style.backgroundImage = `linear-gradient(rgba(10,10,10,0.6), rgba(10,10,10,0.75)), url('${randomImage}')`;
+        document.getElementById('hero').style.backgroundImage = `linear-gradient(rgba(10,10,10,0.65), rgba(10,10,10,0.8)), url('${randomImage}')`;
     </script>
 </body>
 </html>
