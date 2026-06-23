@@ -1,0 +1,665 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Portfolio • Phillip Patterson</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&amp;family=Inter:wght@300;400;500&amp;display=swap');
+        
+        body { font-family: 'Inter', system_ui, sans-serif; }
+        .heading-serif { font-family: 'Playfair Display', Georgia, serif; }
+        
+        .nav-link { position: relative; transition: color 0.2s ease; }
+        .nav-link:after {
+            content: ''; position: absolute; width: 0; height: 1px; bottom: -2px; left: 0;
+            background-color: #0f4c5c; transition: width 0.3s ease;
+        }
+        .nav-link:hover:after { width: 100%; }
+
+        .art-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(320px, 1fr)); gap: 1.75rem; }
+        
+        .portfolio-card {
+            transition: all 0.4s cubic-bezier(0.23, 1.0, 0.32, 1);
+            background: white;
+            border: 1px solid #E5E0D8;
+            border-radius: 20px;
+            overflow: hidden;
+        }
+        
+        .portfolio-card:hover {
+            transform: translateY(-6px);
+            box-shadow: 0 20px 25px -5px rgb(0 0 0 / 0.08), 0 8px 10px -6px rgb(0 0 0 / 0.08);
+        }
+
+        .modal {
+            animation: modalPop 0.25s cubic-bezier(0.23, 1, 0.32, 1);
+        }
+        
+        @keyframes modalPop {
+            from { opacity: 0; transform: translateY(40px) scale(0.96); }
+            to { opacity: 1; transform: translateY(0) scale(1); }
+        }
+
+        .gallery-main {
+            transition: opacity 0.3s ease;
+        }
+
+        .filter-btn {
+            transition: all 0.2s ease;
+        }
+        
+        .filter-btn.active {
+            background-color: #0f4c5c;
+            color: white;
+            border-color: #0f4c5c;
+        }
+
+        .artwork-detail {
+            font-size: 0.95rem;
+            line-height: 1.7;
+        }
+    </style>
+</head>
+<body class="bg-[#FAF8F5] text-[#1A1A1A]">
+    <!-- Fixed Navigation -->
+    <nav class="fixed top-0 left-0 right-0 z-50 bg-[#FAF8F5]/95 backdrop-blur-lg border-b border-[#E5E0D8]">
+        <div class="max-w-screen-2xl mx-auto px-8 md:px-12 flex items-center justify-between h-20">
+            <a href="index.html" class="flex items-center">
+                <img src="assets/images/logo.png" alt="Phillip Patterson Logo" class="h-9 w-auto">
+            </a>
+            
+            <div class="hidden md:flex items-center gap-x-10 text-sm tracking-[0.5px] font-medium">
+                <a href="index.html" class="nav-link text-[#1A1A1A] hover:text-[#0f4c5c]">Home</a>
+                <a href="portfolio.html" class="nav-link text-[#0f4c5c]">Portfolio</a>
+                <a href="available.html" class="nav-link text-[#1A1A1A] hover:text-[#0f4c5c]">Available Works</a>
+                <a href="about.html" class="nav-link text-[#1A1A1A] hover:text-[#0f4c5c]">About</a>
+                <a href="contact.html" class="nav-link text-[#1A1A1A] hover:text-[#0f4c5c]">Contact</a>
+            </div>
+            
+            <button id="mobile-menu-btn" class="md:hidden w-10 h-10 flex items-center justify-center">
+                <i class="fa-solid fa-bars text-xl"></i>
+            </button>
+        </div>
+        
+        <div id="mobile-menu" class="hidden md:hidden bg-[#FAF8F5] border-t border-[#E5E0D8]">
+            <div class="px-8 py-5 flex flex-col gap-y-3 text-sm tracking-[0.5px]">
+                <a href="index.html" class="py-1">Home</a>
+                <a href="portfolio.html" class="py-1 text-[#0f4c5c]">Portfolio</a>
+                <a href="available.html" class="py-1">Available Works</a>
+                <a href="about.html" class="py-1">About</a>
+                <a href="contact.html" class="py-1">Contact</a>
+            </div>
+        </div>
+    </nav>
+
+    <div class="pt-20">
+        <!-- Header -->
+        <div class="max-w-screen-2xl mx-auto px-6 md:px-12 pt-12 pb-8">
+            <div class="flex flex-col md:flex-row md:items-end md:justify-between gap-y-4">
+                <div>
+                    <span class="uppercase tracking-[3px] text-xs text-[#0f4c5c]">THE COMPLETE COLLECTION</span>
+                    <h1 class="text-6xl md:text-7xl heading-serif tracking-[-1.5px] mt-1">Portfolio</h1>
+                </div>
+                <div class="max-w-xs text-sm text-[#555]">
+                    Each work is a negotiation between material and meaning. Click any piece to enter the viewing room.
+                </div>
+            </div>
+        </div>
+
+        <!-- Filters -->
+        <div class="max-w-screen-2xl mx-auto px-6 md:px-12 pb-8">
+            <div class="flex flex-wrap gap-2">
+                <button onclick="filterArtworks('all')" class="filter-btn active px-5 py-2 text-xs tracking-widest border border-[#0f4c5c] rounded-full font-medium" data-filter="all">ALL WORKS</button>
+                <button onclick="filterArtworks('sculpture')" class="filter-btn px-5 py-2 text-xs tracking-widest border border-[#C9C4B9] hover:border-[#0f4c5c] rounded-full font-medium" data-filter="sculpture">SCULPTURE / INSTALLATION</button>
+                <button onclick="filterArtworks('painting')" class="filter-btn px-5 py-2 text-xs tracking-widest border border-[#C9C4B9] hover:border-[#0f4c5c] rounded-full font-medium" data-filter="painting">PAINTING</button>
+            </div>
+        </div>
+
+        <!-- Artwork Grid -->
+        <div class="max-w-screen-2xl mx-auto px-6 md:px-12 pb-20">
+            <div id="art-grid" class="art-grid">
+                <!-- Populated by JavaScript -->
+            </div>
+        </div>
+    </div>
+
+    <!-- Artwork Detail Modal -->
+    <div id="artwork-modal" onclick="if (event.target.id === 'artwork-modal') closeModal()" class="hidden fixed inset-0 z-[100] bg-black/70 flex items-center justify-center p-4 md:p-8">
+        <div onclick="event.stopImmediatePropagation()" class="modal bg-white w-full max-w-6xl max-h-[94dvh] rounded-3xl overflow-hidden shadow-2xl flex flex-col">
+            
+            <!-- Modal Header -->
+            <div class="flex items-center justify-between px-8 py-5 border-b border-[#E5E0D8]">
+                <div id="modal-header-info" class="flex items-center gap-x-4">
+                    <!-- JS injected -->
+                </div>
+                <button onclick="closeModal()" class="w-10 h-10 flex items-center justify-center text-[#666] hover:text-black transition">
+                    <i class="fa-solid fa-times text-2xl"></i>
+                </button>
+            </div>
+
+            <div class="flex-1 overflow-y-auto">
+                <div class="grid md:grid-cols-5 gap-0">
+                    
+                    <!-- Image Gallery -->
+                    <div class="md:col-span-3 bg-[#F4F1EA] p-6 md:p-8">
+                        <div class="relative">
+                            <img id="modal-main-image" src="" alt="Main artwork view" 
+                                 class="w-full aspect-[4/3] object-contain bg-white rounded-2xl shadow-inner cursor-zoom-in"
+                                 onclick="enlargeImage(this.src)">
+                            
+                            <!-- Image navigation -->
+                            <div class="absolute top-4 right-4 bg-white/90 backdrop-blur px-3 py-1 rounded-full text-xs tracking-widest flex items-center gap-x-1.5 shadow">
+                                <span id="image-counter">1 / 5</span>
+                            </div>
+                        </div>
+                        
+                        <!-- Thumbnails -->
+                        <div id="modal-thumbnails" class="flex gap-3 mt-5 overflow-x-auto pb-2 snap-x">
+                            <!-- Populated dynamically -->
+                        </div>
+                        
+                        <div class="mt-3 text-[10px] text-[#777] flex items-center gap-x-2">
+                            <i class="fa-solid fa-info-circle"></i> 
+                            <span>Click main image to view full resolution • Scroll thumbnails to explore details &amp; installation views</span>
+                        </div>
+                    </div>
+                    
+                    <!-- Details Sidebar -->
+                    <div class="md:col-span-2 p-8 md:pr-10 flex flex-col">
+                        <div id="modal-details" class="flex-1">
+                            <!-- JS content -->
+                        </div>
+                        
+                        <div class="pt-6 mt-auto border-t border-[#E5E0D8]">
+                            <div id="modal-actions">
+                                <!-- Purchase / status buttons injected here -->
+                            </div>
+                            
+                            <div class="text-[10px] text-[#888] mt-6 tracking-wider">
+                                SECURE PAYMENT VIA PAYPAL • WORLDWIDE SHIPPING ARRANGED<br>
+                                ALL WORKS COME WITH CERTIFICATE OF AUTHENTICITY
+                            </div>
+                        </div>
+                    </div>
+                    
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Image Lightbox -->
+    <div id="lightbox" onclick="closeLightbox()" class="hidden fixed inset-0 z-[200] bg-black/95 flex items-center justify-center p-4">
+        <div onclick="event.stopImmediatePropagation()" class="relative max-w-[94%] max-h-[92dvh]">
+            <img id="lightbox-image" src="" class="max-w-full max-h-[88dvh] object-contain rounded-xl" alt="Full resolution artwork">
+            <button onclick="closeLightbox()" class="absolute -top-3 -right-3 bg-white text-black w-9 h-9 rounded-full flex items-center justify-center shadow-lg">
+                <i class="fa-solid fa-times"></i>
+            </button>
+        </div>
+    </div>
+
+    <footer class="border-t border-[#E5E0D8] bg-white py-8">
+        <div class="max-w-screen-2xl mx-auto px-6 md:px-12 text-xs text-[#666] flex flex-col md:flex-row justify-between gap-y-3">
+            <div>© Phillip Patterson. All rights reserved.</div>
+            <div class="flex gap-x-5">
+                <a href="contact.html" class="hover:text-[#0f4c5c]">Enquiries</a>
+                <a href="https://bluethumb.com/phillpatterson" target="_blank" class="hover:text-[#0f4c5c]">Also available on Bluethumb</a>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Artwork Data
+        const artworks = [
+            {
+                id: "glass-liminal",
+                title: "Liminal Surge",
+                year: 2026,
+                type: "sculpture",
+                dimensions: "220 × 180 × 90 cm (variable installation)",
+                medium: "Hand-cast glass, resin, stainless steel suspension system, optional integrated LED",
+                price: "POA",
+                status: "available",
+                description: "A suspended monument to the moment between violence and stillness. Multiple layers of fractured glass capture and refract light in unpredictable ways, creating an ever-shifting internal landscape. The work questions permanence — glass that appears liquid, frozen mid-explosion yet completely still.",
+                images: [
+                    { src: "assets/images/glass_sculpture_main.jpg", label: "Primary View" },
+                    { src: "assets/images/glass_installation_studio.jpg", label: "Studio Installation" },
+                    { src: "assets/images/glass_sculpture_detail.jpg", label: "Surface Detail" },
+                    { src: "assets/images/glass_sculpture_angle1.jpg", label: "Angle Study 01" },
+                    { src: "assets/images/glass_sculpture_angle2.jpg", label: "Angle Study 02" }
+                ],
+                video: "assets/images/installation_video.mp4"
+            },
+            {
+                id: "fractured-bloom",
+                title: "Fractured Bloom",
+                year: 2025,
+                type: "painting",
+                dimensions: "130 × 100 cm (unframed)",
+                medium: "Acrylic, hydrophilic fumed silica, impasto gel, resin, glass microspheres on Belgian linen",
+                price: "$2,950 AUD",
+                status: "available",
+                description: "Organic forms push through cracked and distressed surfaces. The fumed silica creates micro-fractures that catch light like morning frost on petals. A meditation on resilience — beauty emerging not despite damage, but through it.",
+                images: [
+                    { src: "assets/images/painting_fractured_bloom_detail.jpg", label: "Full Work" },
+                    { src: "assets/images/installation_in_situ_1.png", label: "In Situ — Living Room" },
+                    { src: "assets/images/installation_in_situ_2.png", label: "In Situ — Neutral Interior" }
+                ]
+            },
+            {
+                id: "vivid-entropy",
+                title: "Vivid Entropy",
+                year: 2026,
+                type: "painting",
+                dimensions: "130 × 100 cm (unframed)",
+                medium: "Acrylic, pigment, calcite, binder, impasto gel, resin on canvas",
+                price: "$3,400 AUD",
+                status: "sold",
+                description: "A riot of colour held in tension by thick, gestural impasto. The surface moves between glossy resin pools and dry, cracked pigment. Light shifts across the facets, revealing new relationships with every viewing angle. This work captures the beautiful violence of becoming.",
+                images: [
+                    { src: "assets/images/painting_vivid_entropy_detail.jpg", label: "Full Work" },
+                    { src: "assets/images/installation_in_situ_3.png", label: "In Situ — Dark Interior" }
+                ]
+            }
+        ];
+
+        let currentArtwork = null;
+        let currentImageIndex = 0;
+
+        function filterArtworks(type) {
+            const cards = document.querySelectorAll('.portfolio-card');
+            const buttons = document.querySelectorAll('.filter-btn');
+            
+            buttons.forEach(btn => btn.classList.remove('active', 'border-[#0f4c5c]'));
+            buttons.forEach(btn => {
+                if (btn.dataset.filter === type || (type === 'all' && btn.dataset.filter === 'all')) {
+                    btn.classList.add('active', 'border-[#0f4c5c]');
+                }
+            });
+            
+            cards.forEach(card => {
+                if (type === 'all') {
+                    card.style.display = '';
+                } else {
+                    if (card.dataset.type === type) {
+                        card.style.display = '';
+                    } else {
+                        card.style.display = 'none';
+                    }
+                }
+            });
+        }
+
+        function createArtworkCard(art) {
+            const statusHTML = art.status === 'available' 
+                ? `<span class="status-badge bg-emerald-100 text-emerald-700 text-[10px] px-3 py-px font-medium tracking-wider">AVAILABLE</span>`
+                : `<span class="status-badge bg-rose-100 text-rose-700 text-[10px] px-3 py-px font-medium tracking-wider">SOLD</span>`;
+            
+            const priceHTML = art.price === 'POA' 
+                ? `<span class="text-[#0f4c5c] font-medium">POA</span>` 
+                : `<span class="text-[#0f4c5c] font-medium">${art.price}</span>`;
+            
+            return `
+                <div onclick="openArtworkModal('${art.id}')" 
+                     class="portfolio-card group cursor-pointer" data-type="${art.type}" data-id="${art.id}">
+                    <div class="aspect-[16/11] overflow-hidden bg-[#EDE9E0]">
+                        <img src="${art.images[0].src}" alt="${art.title}" 
+                             class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-[1.04]">
+                    </div>
+                    <div class="p-6">
+                        <div class="flex justify-between items-start gap-3">
+                            <div class="min-w-0">
+                                <h3 class="font-semibold text-[21px] tracking-[-0.3px] leading-none">${art.title}</h3>
+                                <p class="text-[#555] text-sm mt-1.5">${art.year} • ${art.type === 'sculpture' ? 'Installation' : 'Painting'}</p>
+                            </div>
+                            ${statusHTML}
+                        </div>
+                        
+                        <div class="flex items-center justify-between mt-5 text-sm">
+                            <div class="text-[#666]">${art.dimensions.split('(')[0].trim()}</div>
+                            <div>${priceHTML}</div>
+                        </div>
+                    </div>
+                </div>
+            `;
+        }
+
+        function renderArtworks() {
+            const grid = document.getElementById('art-grid');
+            grid.innerHTML = artworks.map(art => createArtworkCard(art)).join('');
+        }
+
+        function openArtworkModal(artId) {
+            currentArtwork = artworks.find(a => a.id === artId);
+            if (!currentArtwork) return;
+            
+            currentImageIndex = 0;
+            
+            // Header
+            const headerInfo = document.getElementById('modal-header-info');
+            headerInfo.innerHTML = `
+                <div>
+                    <h2 class="text-3xl heading-serif tracking-tighter">${currentArtwork.title}</h2>
+                    <p class="text-sm text-[#555]">${currentArtwork.year} &nbsp;•&nbsp; ${currentArtwork.dimensions}</p>
+                </div>
+            `;
+            
+            // Main image
+            updateMainImage();
+            
+            // Thumbnails
+            renderThumbnails();
+            
+            // Details
+            const details = document.getElementById('modal-details');
+            details.innerHTML = `
+                <div class="space-y-6">
+                    <div>
+                        <div class="uppercase text-[10px] tracking-[1.5px] text-[#0f4c5c] mb-1.5">MEDIUM</div>
+                        <p class="artwork-detail text-[#333]">${currentArtwork.medium}</p>
+                    </div>
+                    
+                    <div>
+                        <div class="uppercase text-[10px] tracking-[1.5px] text-[#0f4c5c] mb-1.5">ARTIST STATEMENT</div>
+                        <p class="artwork-detail text-[#333] leading-relaxed">${currentArtwork.description}</p>
+                    </div>
+                    
+                    <div class="pt-2">
+                        <div class="flex items-baseline gap-x-3">
+                            <span class="text-3xl font-semibold tabular-nums">${currentArtwork.price}</span>
+                            ${currentArtwork.status === 'available' ? 
+                                `<span class="px-3 py-1 text-xs bg-emerald-100 text-emerald-700 rounded font-medium tracking-wider">IN STOCK</span>` : 
+                                `<span class="px-3 py-1 text-xs bg-rose-100 text-rose-700 rounded font-medium tracking-wider">SOLD</span>`}
+                        </div>
+                    </div>
+                </div>
+            `;
+            
+            // Actions
+            const actions = document.getElementById('modal-actions');
+            if (currentArtwork.status === 'available') {
+                actions.innerHTML = `
+                    <button onclick="initiatePurchase('${currentArtwork.id}')" 
+                            class="w-full py-4 bg-[#0f4c5c] hover:bg-[#0a3a45] active:bg-black transition text-white text-sm tracking-[1.25px] font-medium rounded-2xl flex items-center justify-center gap-x-2">
+                        <i class="fa-brands fa-paypal mr-1"></i> 
+                        ACQUIRE THIS WORK VIA PAYPAL
+                    </button>
+                    <button onclick="enquireAboutWork('${currentArtwork.id}')" 
+                            class="mt-3 w-full py-3.5 text-sm tracking-[1px] border border-[#C9C4B9] hover:bg-[#F8F5F0] rounded-2xl font-medium">
+                        ENQUIRE ABOUT THIS PIECE
+                    </button>
+                `;
+            } else {
+                actions.innerHTML = `
+                    <div class="text-center py-3">
+                        <span class="inline-block px-5 py-2 bg-rose-50 text-rose-600 text-xs tracking-[1px] rounded-full font-medium">THIS WORK HAS BEEN ACQUIRED</span>
+                    </div>
+                    <button onclick="enquireAboutWork('${currentArtwork.id}')" 
+                            class="mt-2 w-full py-3.5 text-sm tracking-[1px] border border-[#C9C4B9] hover:bg-[#F8F5F0] rounded-2xl font-medium">
+                        ENQUIRE ABOUT SIMILAR WORKS
+                    </button>
+                `;
+            }
+            
+            // Show modal
+            document.getElementById('artwork-modal').classList.remove('hidden');
+            document.getElementById('artwork-modal').classList.add('flex');
+            
+            // Update counter
+            updateImageCounter();
+        }
+
+        function updateMainImage() {
+            const mainImg = document.getElementById('modal-main-image');
+            const imgData = currentArtwork.images[currentImageIndex];
+            mainImg.src = imgData.src;
+            mainImg.alt = imgData.label;
+        }
+
+        function renderThumbnails() {
+            const container = document.getElementById('modal-thumbnails');
+            container.innerHTML = currentArtwork.images.map((img, idx) => `
+                <div onclick="changeImage(${idx})" 
+                     class="gallery-thumb flex-shrink-0 w-16 h-16 md:w-[72px] md:h-[72px] rounded-xl overflow-hidden cursor-pointer snap-start border-2 ${idx === currentImageIndex ? 'active border-[#0f4c5c]' : 'border-transparent'}">
+                    <img src="${img.src}" alt="${img.label}" class="w-full h-full object-cover">
+                </div>
+            `).join('');
+            
+            // Add video thumbnail if exists
+            if (currentArtwork.video) {
+                container.innerHTML += `
+                    <div onclick="playVideo()" 
+                         class="gallery-thumb flex-shrink-0 w-16 h-16 md:w-[72px] md:h-[72px] rounded-xl overflow-hidden cursor-pointer snap-start border-2 border-transparent flex items-center justify-center bg-black/80 relative">
+                        <i class="fa-solid fa-play text-white text-xl ml-0.5"></i>
+                        <span class="absolute bottom-1 right-1 text-[8px] text-white/70 tracking-widest">VIDEO</span>
+                    </div>
+                `;
+            }
+        }
+
+        function changeImage(index) {
+            currentImageIndex = index;
+            updateMainImage();
+            updateImageCounter();
+            
+            // Update active thumbnail
+            document.querySelectorAll('#modal-thumbnails .gallery-thumb').forEach((thumb, i) => {
+                if (i === index) {
+                    thumb.classList.add('active', 'border-[#0f4c5c]');
+                } else {
+                    thumb.classList.remove('active', 'border-[#0f4c5c]');
+                }
+            });
+        }
+
+        function updateImageCounter() {
+            const counter = document.getElementById('image-counter');
+            const total = currentArtwork.images.length + (currentArtwork.video ? 1 : 0);
+            counter.textContent = `${currentImageIndex + 1} / ${total}`;
+        }
+
+        function playVideo() {
+            const modal = document.getElementById('artwork-modal');
+            modal.classList.add('hidden');
+            modal.classList.remove('flex');
+            
+            const videoModal = document.createElement('div');
+            videoModal.className = `fixed inset-0 z-[200] bg-black/90 flex items-center justify-center p-4`;
+            videoModal.innerHTML = `
+                <div class="relative w-full max-w-5xl">
+                    <video controls autoplay class="w-full rounded-2xl shadow-2xl" style="max-height: 82dvh">
+                        <source src="${currentArtwork.video}" type="video/mp4">
+                        Your browser does not support the video tag.
+                    </video>
+                    <button onclick="this.closest('.fixed').remove(); document.getElementById('artwork-modal').classList.remove('hidden'); document.getElementById('artwork-modal').classList.add('flex');" 
+                            class="absolute -top-4 -right-4 bg-white text-black w-10 h-10 rounded-full flex items-center justify-center shadow text-xl">
+                        <i class="fa-solid fa-times"></i>
+                    </button>
+                </div>
+            `;
+            document.body.appendChild(videoModal);
+        }
+
+        function enlargeImage(src) {
+            const lightbox = document.getElementById('lightbox');
+            const img = document.getElementById('lightbox-image');
+            img.src = src;
+            lightbox.classList.remove('hidden');
+            lightbox.classList.add('flex');
+        }
+
+        function closeLightbox() {
+            const lightbox = document.getElementById('lightbox');
+            lightbox.classList.remove('flex');
+            lightbox.classList.add('hidden');
+        }
+
+        function closeModal() {
+            const modal = document.getElementById('artwork-modal');
+            modal.classList.remove('flex');
+            modal.classList.add('hidden');
+        }
+
+        function initiatePurchase(artId) {
+            const art = artworks.find(a => a.id === artId);
+            if (!art) return;
+            
+            const purchaseModal = document.createElement('div');
+            purchaseModal.className = `fixed inset-0 z-[150] bg-black/60 flex items-end md:items-center justify-center`;
+            purchaseModal.innerHTML = `
+                <div onclick="event.target.remove()" class="absolute inset-0"></div>
+                <div onclick="event.stopImmediatePropagation()" class="relative bg-white w-full md:w-[440px] md:rounded-3xl md:m-4 p-8 rounded-t-3xl">
+                    <div class="flex justify-between items-start mb-6">
+                        <div>
+                            <div class="text-xs tracking-[1.5px] text-[#0f4c5c]">SECURE CHECKOUT</div>
+                            <h3 class="text-2xl heading-serif tracking-tight">${art.title}</h3>
+                        </div>
+                        <button onclick="this.closest('.fixed').remove()" class="text-2xl text-[#999] hover:text-black">×</button>
+                    </div>
+                    
+                    <div class="bg-[#F8F5F0] rounded-2xl p-5 mb-6">
+                        <div class="flex justify-between text-sm">
+                            <span class="text-[#555]">Artwork Price</span>
+                            <span class="font-semibold">${art.price}</span>
+                        </div>
+                        <div class="flex justify-between text-sm mt-2 text-[#555]">
+                            <span>Shipping (Australia)</span>
+                            <span class="font-medium">Arranged post-purchase</span>
+                        </div>
+                    </div>
+                    
+                    <form id="purchase-form" onsubmit="submitPurchase(event, '${art.id}')">
+                        <div class="space-y-4">
+                            <div>
+                                <label class="text-xs tracking-wider text-[#555] block mb-1.5">FULL NAME</label>
+                                <input type="text" required class="w-full border border-[#D9D4C9] rounded-xl px-4 py-3 text-sm focus:outline-none focus:border-[#0f4c5c]" placeholder="Alex Rivera">
+                            </div>
+                            <div>
+                                <label class="text-xs tracking-wider text-[#555] block mb-1.5">EMAIL ADDRESS</label>
+                                <input type="email" required class="w-full border border-[#D9D4C9] rounded-xl px-4 py-3 text-sm focus:outline-none focus:border-[#0f4c5c]" placeholder="you@domain.com">
+                            </div>
+                            <div>
+                                <label class="text-xs tracking-wider text-[#555] block mb-1.5">DELIVERY LOCATION</label>
+                                <input type="text" class="w-full border border-[#D9D4C9] rounded-xl px-4 py-3 text-sm focus:outline-none focus:border-[#0f4c5c]" placeholder="Sydney, Australia" value="Sydney, NSW">
+                            </div>
+                        </div>
+                        
+                        <button type="submit" 
+                                class="mt-7 w-full py-[17px] bg-[#0f4c5c] hover:bg-black active:bg-[#111] transition text-white text-sm tracking-[1.5px] font-medium rounded-2xl flex items-center justify-center gap-x-2">
+                            <i class="fa-brands fa-paypal"></i> 
+                            PROCEED TO PAYPAL CHECKOUT
+                        </button>
+                    </form>
+                    
+                    <p class="text-center text-[10px] text-[#777] mt-5 tracking-wider">You will be redirected to PayPal to complete payment securely.<br>Funds are held until artwork is shipped.</p>
+                </div>
+            `;
+            document.body.appendChild(purchaseModal);
+        }
+
+        function submitPurchase(e, artId) {
+            e.preventDefault();
+            const form = e.target;
+            const btn = form.querySelector('button');
+            const originalText = btn.innerHTML;
+            
+            btn.disabled = true;
+            btn.innerHTML = `<i class="fa-solid fa-spinner fa-spin mr-2"></i> CONNECTING TO PAYPAL...`;
+            
+            setTimeout(() => {
+                btn.innerHTML = `PAYMENT INITIATED`;
+                
+                setTimeout(() => {
+                    form.closest('.fixed').remove();
+                    
+                    // Success toast
+                    const toast = document.createElement('div');
+                    toast.className = `fixed bottom-6 left-1/2 -translate-x-1/2 bg-[#0f4c5c] text-white px-8 py-4 rounded-2xl shadow-xl flex items-center gap-x-3 text-sm tracking-wider z-[300]`;
+                    toast.innerHTML = `
+                        <i class="fa-solid fa-check-circle text-xl"></i> 
+                        <div>
+                            <span class="font-medium">Thank you.</span> We have received your enquiry and will send a PayPal invoice within 2 hours.
+                        </div>
+                    `;
+                    document.body.appendChild(toast);
+                    
+                    setTimeout(() => {
+                        toast.style.transition = 'all 0.4s ease';
+                        toast.style.opacity = '0';
+                        setTimeout(() => toast.remove(), 400);
+                    }, 5200);
+                }, 1450);
+            }, 1850);
+        }
+
+        function enquireAboutWork(artId) {
+            closeModal();
+            // Scroll to contact or open contact with prefilled
+            window.location.href = `contact.html?artwork=${artId}`;
+        }
+
+        function initMobileMenu() {
+            const btn = document.getElementById('mobile-menu-btn');
+            const menu = document.getElementById('mobile-menu');
+            if (!btn || !menu) return;
+            
+            btn.addEventListener('click', () => {
+                menu.classList.toggle('hidden');
+                const icon = btn.querySelector('i');
+                icon.classList.toggle('fa-bars');
+                icon.classList.toggle('fa-times');
+            });
+        }
+
+        function initFilters() {
+            // Set initial active filter
+            const allBtn = document.querySelector('.filter-btn[data-filter="all"]');
+            if (allBtn) allBtn.classList.add('active', 'border-[#0f4c5c]');
+        }
+
+        function init() {
+            renderArtworks();
+            initMobileMenu();
+            initFilters();
+            
+            // Keyboard support
+            document.addEventListener('keydown', function(e) {
+                if (e.key === 'Escape') {
+                    const modals = document.querySelectorAll('.fixed.inset-0');
+                    if (modals.length > 0) {
+                        modals[modals.length - 1].remove();
+                    } else {
+                        const artworkModal = document.getElementById('artwork-modal');
+                        if (!artworkModal.classList.contains('hidden')) {
+                            artworkModal.classList.add('hidden');
+                            artworkModal.classList.remove('flex');
+                        }
+                    }
+                }
+                
+                if (e.key === 'ArrowRight' && !document.getElementById('artwork-modal').classList.contains('hidden')) {
+                    if (currentArtwork) {
+                        const next = (currentImageIndex + 1) % currentArtwork.images.length;
+                        changeImage(next);
+                    }
+                }
+            });
+            
+            // Pre-open if hash present
+            if (window.location.hash) {
+                const id = window.location.hash.substring(1);
+                setTimeout(() => {
+                    const art = artworks.find(a => a.id === id);
+                    if (art) openArtworkModal(id);
+                }, 650);
+            }
+            
+            console.log('%c[Portfolio] Phillip Patterson gallery ready.', 'color:#888');
+        }
+        
+        window.onload = init;
+    </script>
+</body>
+</html>
